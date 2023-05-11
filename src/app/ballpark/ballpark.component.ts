@@ -3,11 +3,11 @@ import * as Raphael from 'raphael';
 
 
 @Component({
-  selector: 'app-stadium1',
-  templateUrl: './stadium1.component.html',
-  styleUrls: ['./stadium1.component.scss']
+  selector: 'ballpark',
+  templateUrl: './ballpark.component.html',
+  styleUrls: ['./ballpark.component.scss']
 })
-export class Stadium1Component implements AfterViewInit {
+export class BallparkComponent implements AfterViewInit {
 
   @Input() leftFieldLine: number = 360;
   @Input() centerFieldLine: number = 360;
@@ -20,10 +20,10 @@ export class Stadium1Component implements AfterViewInit {
   //nice util: https://svg-path-visualizer.netlify.app/
 
   ngAfterViewInit(): void {
-    let stadium = this.stadium(360, 400, 300);
+    let stadium = this.stadium(this.leftFieldLine, this.centerFieldLine, this.rightFieldLine);
   }
 
-  stadium(leftFieldLine: number, centerFieldLine: number, rightFieldLine: number) {
+  stadium(leftFieldLine: number, centerFieldLine: number, rightFieldLine: number): Raphael.RaphaelPaper<"SVG" | "VML">  {
 
     let cfXY = 320; //todo trig
     let maxFieldLine = Math.max(cfXY, leftFieldLine, rightFieldLine);
@@ -48,6 +48,7 @@ export class Stadium1Component implements AfterViewInit {
     let b2 = field.path(this.rectangle(90-baseFt, 90-baseFt, baseFt)).attr({stroke: "#000", "stroke-width": 1});
     let b3 = field.path(this.rectangle(90-baseFt, 0, baseFt)).attr({stroke: "#000", "stroke-width": 1});
 
+    return field;
   }
 
   rectangle(x: number, y: number, size: number): string
